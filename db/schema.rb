@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120125183321) do
+ActiveRecord::Schema.define(:version => 20120201104559) do
 
   create_table "conditions", :force => true do |t|
     t.integer  "level"
@@ -26,6 +26,9 @@ ActiveRecord::Schema.define(:version => 20120125183321) do
     t.integer  "world_id"
     t.datetime "created_at",     :null => false
     t.datetime "updated_at",     :null => false
+    t.integer  "last_score"
+    t.integer  "bank_level"
+    t.integer  "score"
   end
 
   create_table "scores", :force => true do |t|

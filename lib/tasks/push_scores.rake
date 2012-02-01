@@ -7,6 +7,7 @@ task :push_scores => :environment do
     puts "Processing world #{match[1]}_#{match[2]} [id: #{world_id}]"
     file = File.open(path)
     lines = file.readlines()
+    next if lines.size != 4800
     player_ids = []
     players = {}
     1200.times {|i| player_ids << lines[i*4].to_i; players[lines[i*4].to_i] = lines[i*4+1].strip}
@@ -21,13 +22,34 @@ task :push_scores => :environment do
     end
   
     players = {}
-    Player.where(:game_player_id => player_ids, :world_id => 1).each do |player|
-      players[player.game_player_id] = player.id
+    Player.where(:game_player_id => player_ids, :world_id => world_id).each do |player|
+      players[player.game_player_id] = player
     end
-  
-  
-    1200.times do |i|
-      Score.create(:score => lines[i*4+3], :place => lines[i*4+2], :player_id => players[lines[i*4].to_i])
+    
+    conditions = {}
+    Condition.all.each do |condition|
+      conditions[condition.value] = condition.level
+    end
+    
+    ActiveRecord::Base.transaction do
+      1200.times do |i|
+        player = players[lines[i*4].to_i]
+        player_name = lines[i*4+1].strip
+        score = lines[i*4+3].to_i
+        place = lines[i*4+2]
+        player.scores.create(:score => score, :place => place)
+        
+        unless (player.score && player.last_score)
+          player.update_attributes(:score => score, :last_score => score)
+          next
+        end
+        
+        last_score = player.score
+        bank_level = conditions[score-last_score]
+        attrs = {:score => score, :last_score => last_score, :player_name => player_name}
+        (attrs[:bank_level] = bank_level) if bank_level
+        player.update_attributes(attrs)
+      end
     end
     
     FileUtils.rm(path)
