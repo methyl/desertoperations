@@ -9,7 +9,7 @@ task :update_levels => :environment do
       next if player.scores.size < 2
       score = player.scores.last.score
       last_score = player.scores[-2].score
-      # player.update_attributes(:score => score, :last_score => last_score)
+      player.update_attributes(:score => score, :last_score => last_score)
       
       last_score = player.scores.first.score
       player.scores.each do |score|
