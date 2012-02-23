@@ -5,6 +5,7 @@ DesertOperations::Application.routes.draw do
   post "login" => "sessions#create"
 
   resources :users
+  resources :invitations, :only => :create
 
   root :to => "home#index"
 

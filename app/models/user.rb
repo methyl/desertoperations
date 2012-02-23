@@ -20,4 +20,9 @@ class User < ActiveRecord::Base
       errors.add(:register_invitation_id, "is invalid")
     end
   end
+
+  def generate_invitation
+    invitation.destroy unless invitation.nil?
+    self.create_invitation
+  end
 end

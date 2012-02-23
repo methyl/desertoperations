@@ -11,6 +11,10 @@ class Invitation < ActiveRecord::Base
     true
   end
 
+  def expiration
+    created_at + 7
+  end
+
   private
 
   def generate_id(size = 12)

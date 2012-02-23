@@ -2,7 +2,30 @@
 
 - if current_user
   Hello,
+  = current_user.email
   = link_to "click here", logout_path
   to logout.
+  %br/
+  - if current_user.invitation.nil?
+    You haven't generated your invitation yet.
+    %br/
+    You can generate one.
+    = form_tag invitations_path do
+      = submit_tag "Generate invitation"
+  - elsif current_user.invitation.expired?
+    Your invitation is expired,
+    = link_to "click here", create_invitation_path
+    to generate new.
+  - else
+    Your invitation code is:
+    %br/
+    = text_field_tag "code", current_user.invitation.id
+    %br/
+    It will be valid until
+    = current_user.invitation.expiration
+    %br/
+    You can generate a new one.
+    = form_tag invitations_path do
+      = submit_tag "Generate invitation"
 - else
   = render :partial => 'users/form'
