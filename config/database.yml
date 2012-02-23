@@ -24,7 +24,7 @@ production:
   adapter: mysql2
   encoding: utf8
   database: desertops
-  host: localhost
+  host: ks393442.kimsufi.com
   pool: 5
-  username: root
+  username: desertops
   password: niemam
