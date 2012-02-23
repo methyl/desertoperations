@@ -59,6 +59,8 @@ module DesertOperations
     config.generators do |g|
       g.test_framework :rspec, :views => false
       g.fixture_replacement :factory_girl, :dir => "spec/factories"
+      g.template_engine :haml
+      g.stylesheet_engine :sass
     end
   end
 end

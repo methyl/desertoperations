@@ -1,0 +1,8 @@
+%h2 Home
+
+- if current_user
+  Hello,
+  = link_to "click here", logout_path
+  to logout.
+- else
+  = render :partial => 'users/form'

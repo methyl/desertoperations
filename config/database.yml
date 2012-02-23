@@ -6,7 +6,10 @@ development:
   pool: 5
   username: root
   password: root
-  socket: /Applications/MAMP/tmp/mysql/mysql.sock
+  #socket: /Applications/MAMP/tmp/mysql/mysql.sock
+  host: localhost
+  username: root
+  password: lucek1
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
