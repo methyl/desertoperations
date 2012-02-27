@@ -3,7 +3,8 @@ task :push_scores => :environment do
   files = Dir.glob("tmp/users/*")
   files.each do |path|
     match = /users\/(.*)_(.)/.match(path)
-    world_id = World.where(:lang => match[1], :front => match[2]).first.id
+    world = World.where(:lang => match[1], :front => match[2]).first
+    world_id = World.id
     puts "Processing world #{match[1]}_#{match[2]} [id: #{world_id}]"
     file = File.open(path)
     lines = file.readlines()
@@ -51,6 +52,8 @@ task :push_scores => :environment do
         player.update_attributes(attrs)
       end
     end
+    
+    World.recalculate_stats
     
     FileUtils.rm(path)
   end

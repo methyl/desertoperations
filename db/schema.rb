@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120221140405) do
+ActiveRecord::Schema.define(:version => 20120227150234) do
 
   create_table "conditions", :force => true do |t|
     t.integer  "level"
@@ -27,15 +27,20 @@ ActiveRecord::Schema.define(:version => 20120221140405) do
     t.datetime "updated_at",                    :null => false
   end
 
+  create_table "languages", :primary_key => "name", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "players", :force => true do |t|
     t.string   "player_name"
     t.integer  "game_player_id"
     t.integer  "world_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-    t.integer  "last_score",     :limit => 8
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "last_score"
     t.integer  "bank_level"
-    t.integer  "score",          :limit => 8
+    t.integer  "score"
   end
 
   create_table "scores", :force => true do |t|
@@ -45,9 +50,6 @@ ActiveRecord::Schema.define(:version => 20120221140405) do
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
-
-  add_index "scores", ["player_id", "created_at"], :name => "player_id_created_at"
-  add_index "scores", ["player_id"], :name => "p_id"
 
   create_table "users", :force => true do |t|
     t.string   "username",                        :null => false
@@ -62,16 +64,20 @@ ActiveRecord::Schema.define(:version => 20120221140405) do
     t.datetime "reset_password_token_expires_at"
     t.datetime "reset_password_email_sent_at"
     t.string   "register_invitation_id"
+    t.integer  "credits"
+    t.boolean  "premium"
   end
 
   add_index "users", ["remember_me_token"], :name => "index_users_on_remember_me_token"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token"
 
   create_table "worlds", :force => true do |t|
-    t.string   "lang"
+    t.string   "language_id"
     t.integer  "front"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "level_summary"
+    t.integer  "bank_count"
   end
 
 end

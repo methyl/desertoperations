@@ -27,5 +27,8 @@
     You can generate a new one.
     = form_tag invitations_path do
       = submit_tag "Generate invitation"
+    
+  - if current_user.premium?
+    asd
 - else
   = render :partial => 'users/form'

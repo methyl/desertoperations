@@ -10,7 +10,8 @@ langs = {'pl' => 4, 'uk' => 3, 'de' => 5, 'fr' => 5, 'pt' => 3, 'it' => 2,
   'es' => 4, 'nl' => 3, 'br' => 5, 'tr' => 4, 'hr' => 1, 'se' => 1}
 
 langs.each do |lang, worlds|
-  worlds.times {|front| Factory :world, :lang => lang, :front => front+1}
+  language = Factory :language, :name => lang
+  worlds.times {|front| Factory :world, :language_id => lang, :front => front+1}
 end
 
 conditions = {6 => %w(14746	23746),

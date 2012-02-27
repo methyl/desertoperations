@@ -25,4 +25,5 @@ class User < ActiveRecord::Base
     invitation.destroy unless invitation.nil?
     self.create_invitation
   end
+  
 end
