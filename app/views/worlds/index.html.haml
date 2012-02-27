@@ -1,0 +1,18 @@
+%h2 Lista swiatow
+- @languages.each do |language|
+  %h3= language.name
+  %table
+    %tr
+      %td Front
+      %td Liczba banków
+      %td Suma poziomów
+      %td Czynnik
+    - language.worlds.each do |world|
+      %tr
+        %td= world.front
+        %td= world.bank_count
+        %td= world.level_summary
+        %td= world.level_factor
+      
+    
+  
