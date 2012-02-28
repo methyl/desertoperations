@@ -1,17 +1,18 @@
 require 'fileutils'
 task :push_scores => :environment do
   files = Dir.glob("tmp/users/*")
+  players_count = 3000
   files.each do |path|
     match = /users\/(.*)_(.)/.match(path)
-    world = World.where(:lang => match[1], :front => match[2]).first
-    world_id = World.id
+    world = World.where(:language_id => match[1], :front => match[2]).first
+    world_id = world.id
     puts "Processing world #{match[1]}_#{match[2]} [id: #{world_id}]"
     file = File.open(path)
     lines = file.readlines()
-    next if lines.size != 4800
+    next if lines.size != players_count*4
     player_ids = []
     players = {}
-    1200.times {|i| player_ids << lines[i*4].to_i; players[lines[i*4].to_i] = lines[i*4+1].strip}
+    players_count.times {|i| player_ids << lines[i*4].to_i; players[lines[i*4].to_i] = lines[i*4+1].strip}
     existing_player_ids = []
     existing_players = Player.where(:game_player_id => player_ids, :world_id => world_id)
     existing_players.each {|player| existing_player_ids << player.game_player_id}
@@ -33,7 +34,7 @@ task :push_scores => :environment do
     end
     
     ActiveRecord::Base.transaction do
-      1200.times do |i|
+      players_count.times do |i|
         player = players[lines[i*4].to_i]
         player_name = lines[i*4+1].strip
         score = lines[i*4+3].to_i
@@ -53,7 +54,7 @@ task :push_scores => :environment do
       end
     end
     
-    World.recalculate_stats
+    world.recalculate_stats
     
     FileUtils.rm(path)
   end

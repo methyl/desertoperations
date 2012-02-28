@@ -1,5 +1,5 @@
 class WorldsController < ApplicationController
   def index
-    @languages = Language.all
+    @languages = Language.includes(:worlds)
   end
 end
