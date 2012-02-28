@@ -1,6 +1,7 @@
 class World < ActiveRecord::Base
   has_many :players
   has_many :scores
+  has_many :world_stats
   belongs_to :language
   
   def level_factor
@@ -12,5 +13,6 @@ class World < ActiveRecord::Base
     sum = 0
     players_with_bank_level.each {|p| sum += p.bank_level}
     self.update_attributes :bank_count => players_with_bank_level.count, :level_summary => sum
+    self.world_stats.create :bank_count => players_with_bank_level.count, :level_summary => sum
   end
 end
