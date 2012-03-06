@@ -11,6 +11,8 @@ gem 'factory_girl_rails'
 gem 'sorcery'
 gem 'formtastic'
 gem 'haml-rails'
+gem 'lazy_high_charts'
+gem 'kaminari'
 
 # Gems used only for assets and not required
 # in production environments by default.

@@ -1,0 +1,19 @@
+%h2 Lista graczy
+
+%table
+  %tr
+    %td Miejsce
+    %td Login
+    %td Punkty
+    %td Poziom banku
+    
+  - @players.each do |player|
+    %tr
+      %td= player.place
+      %td= player.player_name
+      %td= player.score
+      %td Sprawdź  
+      
+= paginate @players
+    
+    

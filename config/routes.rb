@@ -9,6 +9,7 @@ DesertOperations::Application.routes.draw do
   resources :users
   resources :invitations, :only => :create
   resources :worlds, :only => :index
+  resources :players
 
   root :to => "home#index"
 

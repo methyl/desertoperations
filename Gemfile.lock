@@ -78,6 +78,12 @@ GEM
       thor (~> 0.14)
     json (1.6.5)
     json_pure (1.6.5)
+    kaminari (0.13.0)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      railties (>= 3.0.0)
+    lazy_high_charts (1.1.5)
+      bundler (~> 1.0)
     mail (2.4.1)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
@@ -178,6 +184,8 @@ DEPENDENCIES
   formtastic
   haml-rails
   jquery-rails
+  kaminari
+  lazy_high_charts
   mysql
   mysql2
   pg
