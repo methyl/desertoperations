@@ -6,7 +6,7 @@ gem 'rails', '3.2.1'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'mysql2'
-gem 'mysql'
+#gem 'mysql'
 gem 'factory_girl_rails'
 gem 'sorcery'
 gem 'formtastic'
