@@ -14,7 +14,8 @@
       = submit_tag "Generate invitation"
   - elsif current_user.invitation.expired?
     Your invitation is expired,
-    = link_to "click here", create_invitation_path
+    = form_tag invitations_path do
+      = submit_tag "click here"
     to generate new.
   - else
     Your invitation code is:
