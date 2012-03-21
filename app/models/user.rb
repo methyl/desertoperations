@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
   has_one :invitation
   belongs_to :register_invitation, :class_name => "Invitation"
+  has_many :spies
 
   attr_accessible :username, :email, :password, :password_confirmation, :register_invitation_id
 

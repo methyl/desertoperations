@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120228204052) do
+ActiveRecord::Schema.define(:version => 20120319150515) do
 
   create_table "conditions", :force => true do |t|
     t.integer  "level"
@@ -49,6 +49,15 @@ ActiveRecord::Schema.define(:version => 20120228204052) do
     t.integer  "player_id"
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
+  end
+
+  create_table "spies", :force => true do |t|
+    t.integer  "player_id"
+    t.integer  "user_id"
+    t.integer  "bank_level"
+    t.integer  "score_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

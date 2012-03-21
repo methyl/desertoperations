@@ -1,0 +1,1 @@
+$('.status').html('done, <%= @spy.bank_level %>')

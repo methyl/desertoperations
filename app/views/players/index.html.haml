@@ -1,19 +1,4 @@
-%h2 Lista graczy
+%h2 Sprawdź gracza
 
-%table
-  %tr
-    %td Miejsce
-    %td Login
-    %td Punkty
-    %td Poziom banku
-    
-  - @players.each do |player|
-    %tr
-      %td= player.place
-      %td= player.player_name
-      %td= player.score
-      %td Sprawdź  
-      
-= paginate @players
-    
-    
+= form_for :player,  :url => players_spy_find_path do |f|
+  = f.text_field :login
