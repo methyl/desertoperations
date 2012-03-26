@@ -3,11 +3,50 @@ progressbar_init = (time, parent) ->
   parent.find(".progress .ui-progressbar-value").addClass("ui-corner-right");
   parent.find(".progress .ui-progressbar-value").css("display","block");
   parent.find(".progress .ui-progressbar-value").animate({width: "100%"}, time*1000, 'linear')
-  parent.find(".find form input[type=submit], .check form input[type=submit]").attr('disabled','disabled')
+  parent.find(".find form button, .check form button").attr('disabled','disabled')
 
+create_form = ->
+  $('ul.forms').append("
+  <li>
+    <div class='form'>
+      <button class='remove'>Usuń</button>
+      <div class='status'></div>
+      <div class='progress'></div>
+      <input type='hidden' name='player_id' />
+      <div class='find'>
+        <input type='text' name='player_name' />
+        <button>Szukaj</button>
+      </div>
+      <div class='check'>
+        <button>Sprawdź dostępność</button>
+      </div>
+      <div class='create'>
+        <button>Szpieguj gracza</button>
+      </div>
+  </li>
+  ").children('li').fadeIn()
+  
+  $('.form .remove').click ->
+    $(@).parents('li').fadeOut(300, -> @.remove())
+
+create_spy = (spy) ->
+  $('ul.spies').prepend("
+  <li class='new'>
+    "+spy.bank_level+"
+    "+spy.player.player_name+"
+  </li>
+  ").children('li').eq(0).fadeIn()
+  
 $ ->
+  
+  for i in [0..5]
+    create_form()
+     
+  $('.add-form').click ->
+    create_form()
 
-  $(".find input[type=submit]").click ->
+
+  $(".find button").click ->
     form = $(@).parents('div.form')
     status = form.find('.status')
     player_name = form.find(".find input[type=text]").val()
@@ -30,7 +69,7 @@ $ ->
           status.html("Player "+player_name+"not found :(")
     , time*1000
     
-  $(".check input[type=submit]").click ->
+  $(".check button").click ->
     form = $(@).parents('div.form')
     status = form.find('.status')
     player_name = form.find(".find input[type=text]").val()
@@ -53,7 +92,7 @@ $ ->
           status.html("Try again")
     , time*1000
     
-  $(".create input[type=submit]").click ->
+  $(".create button").click ->
     form = $(@).parents('div.form')
     status = form.find('.status')
     player_name = form.find(".find input[type=text]").val()
@@ -65,6 +104,8 @@ $ ->
     
     status.html('Gathering data, it can take about 10 minutes...')
     $(@).attr('disabled', 'disabled')
+    
+    
     
     $.ajax
       type: "POST"
@@ -79,5 +120,19 @@ $ ->
         url: "/spy/validate.json"
         data: {spy_id: spy_id}
         success: (data) ->
-          status.html("Level: "+data.bank_level)
+          form.parents('li').fadeOut(3000, -> @.remove())
+          create_spy(data)
     , time*1000
+    
+  $('ul.spies li .refresh').click ->
+    spy_id = $(@).parents('li').find('input[name=spy_id]').val()
+    li = $(@).parents('li')
+    $.ajax
+      type: "POST"
+      url: "/spy/validate.json"
+      data: {spy_id: spy_id}
+      success: (data) ->
+        li.remove()
+        create_spy(data).remove()
+      error: ->
+        li.find(".status").html("Isn't ready yet, please wait.")

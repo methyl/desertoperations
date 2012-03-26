@@ -4,6 +4,7 @@ class SpyController < ApplicationController
   respond_to :html, :json
   
   def index
+    @spies = current_user.spies.order("created_at desc")
   end
   
   def find
@@ -23,11 +24,16 @@ class SpyController < ApplicationController
   end
   
   def validate
-    @spy = Spy.find(params[:spy_id])
+    @spy = Spy.includes(:player).find(params[:spy_id])
+    raise "not ready yet" unless @spy.ready?
     if @spy.ready?
       @spy.update_attributes :bank_level => @spy.player.bank_level, :score => @spy.player.scores.last
     end
-    respond_with @spy
+    respond_to do |format|
+      format.json do
+        render :json => @spy.to_json(:include => :player)
+      end
+    end
   end
   
 end

@@ -1,42 +1,19 @@
 %h2 Sprawdź gracza
 
-.form
-  .status
-  .progress
+= button_tag "Więcej", :class => "add-form"
 
-  = hidden_field_tag :player_id
+%ul.forms
 
-  .find
-    = text_field_tag :player_name
-    = submit_tag "Szukaj", :class => "find"
-    
-  
-  .check
-    = submit_tag "Sprawdź dostępność", :disabled => true
-    
-  
-  .create
-    = submit_tag "Szpieguj gracza", :disabled => true
+
+%ul.spies
+  - @spies.each do |spy|
+    %li{:class => ("in-progress" unless spy.completed?)}
+      = spy.bank_level
+      = spy.player.player_name
+      = spy.created_at
+      - unless spy.completed?
+        = hidden_field_tag "spy_id", spy.id
+        = button_tag "Refresh", :class => "refresh"
+       
+      .status
       
-    
-      
-.form
-  .status
-  .progress
-
-  = hidden_field_tag :player_id
-
-  .find
-    = text_field_tag :player_name
-    = submit_tag "Szukaj", :class => "find"
-
-
-  .check
-    = submit_tag "Sprawdź dostępność", :disabled => true
-
-
-  .create
-    = submit_tag "Szpieguj gracza", :disabled => true
-
-
-
