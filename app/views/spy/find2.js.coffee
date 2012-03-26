@@ -19,4 +19,3 @@ setTimeout (->
   $("find form input[type=submit]").removeAttr('disabled')
 
   ), time*1000
-

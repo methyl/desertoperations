@@ -1,25 +1,42 @@
 %h2 Sprawdź gracza
 
-.status
-.progress
+.form
+  .status
+  .progress
 
-.find
-  = form_tag :find_spy, :remote => true do |f|
+  = hidden_field_tag :player_id
+
+  .find
     = text_field_tag :player_name
-    = submit_tag "Szukaj"
+    = submit_tag "Szukaj", :class => "find"
     
   
-.check
-  = form_tag :check_spy, :remote => true do |f|
-    = hidden_field_tag :player_name
+  .check
     = submit_tag "Sprawdź dostępność", :disabled => true
     
   
-.create
-  = form_tag :spy, :remote => true do |f|
-    = hidden_field_tag :player_name
+  .create
     = submit_tag "Szpieguj gracza", :disabled => true
       
     
       
-    
+.form
+  .status
+  .progress
+
+  = hidden_field_tag :player_id
+
+  .find
+    = text_field_tag :player_name
+    = submit_tag "Szukaj", :class => "find"
+
+
+  .check
+    = submit_tag "Sprawdź dostępność", :disabled => true
+
+
+  .create
+    = submit_tag "Szpieguj gracza", :disabled => true
+
+
+
