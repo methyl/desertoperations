@@ -1,4 +1,8 @@
 ActionMailer::Base.smtp_settings = {  
-  :address              => "localhost",  
-  :port                 => 25
+  :address              => "smtp.gmail.com",  
+  :port                 => 587,  
+  :user_name            => "nocuje.net",  
+  :password             => "niepowiem",  
+  :authentication       => "plain",  
+  :enable_starttls_auto => true  
 }

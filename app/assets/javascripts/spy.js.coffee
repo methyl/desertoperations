@@ -30,7 +30,7 @@ create_form = ->
   ").children('li').fadeIn()
   
   $('.form .remove').click ->
-    $(@).parents('li').fadeOut(300, -> @.remove())
+    $(@).parents('li').fadeOut(300, -> $(@).remove())
 
 create_spy = (spy) ->
   $('ul.spies').prepend("
@@ -96,14 +96,19 @@ $ ->
           status.html("Player not available.")
     , time*1000
   
-    $("button.remind").click ->
-      $.ajax
-        type: "POST"
-        url: "/spy/remind.json"
-        data: {player_id: player_id}
-        success: (data) ->
-          status.html('You will be reminded.')
-          form.parents('li').fadeOut(3000, -> @.remove())
+  $("button.remind").click ->
+    form = $(@).parents('div.form')
+    status = form.find('.status')
+    player_name = form.find(".find input[type=text]").val()
+    player_id = form.find("input[name=player_id]").val()
+      
+    $.ajax
+      type: "POST"
+      url: "/spy/remind.json"
+      data: {player_id: player_id}
+      success: (data) ->
+        status.html('You will be reminded.')
+        form.parents('li').fadeOut(3000, -> $(@).remove())
     
   $(".create button").click ->
     form = $(@).parents('div.form')
@@ -131,7 +136,7 @@ $ ->
         url: "/spy/validate.json"
         data: {spy_id: spy_id}
         success: (data) ->
-          form.parents('li').fadeOut(3000, -> @.remove())
+          form.parents('li').fadeOut(3000, -> $(@).remove())
           create_spy(data)
     , time*1000
     
