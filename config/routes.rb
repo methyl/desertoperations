@@ -16,6 +16,8 @@ DesertOperations::Application.routes.draw do
       post 'find'
       post 'check'
       post 'validate'
+      post 'remind'
+      
     end
   end
   

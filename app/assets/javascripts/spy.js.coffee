@@ -18,7 +18,10 @@ create_form = ->
         <button>Szukaj</button>
       </div>
       <div class='check'>
-        <button>Sprawdź dostępność</button>
+        <button class='check'>Sprawdź dostępność</button>
+        <div class='reminder'>
+          <button class='remind'>Przypomnij, gdy będzie dostępny.</button>
+        </div>
       </div>
       <div class='create'>
         <button>Szpieguj gracza</button>
@@ -32,8 +35,8 @@ create_form = ->
 create_spy = (spy) ->
   $('ul.spies').prepend("
   <li class='new'>
-    "+spy.bank_level+"
-    "+spy.player.player_name+"
+    #{spy.bank_level}
+    #{spy.player.player_name}
   </li>
   ").children('li').eq(0).fadeIn()
   
@@ -69,7 +72,7 @@ $ ->
           status.html("Player "+player_name+"not found :(")
     , time*1000
     
-  $(".check button").click ->
+  $("button.check").click ->
     form = $(@).parents('div.form')
     status = form.find('.status')
     player_name = form.find(".find input[type=text]").val()
@@ -89,8 +92,18 @@ $ ->
           form.find(".create").show()
           form.find(".create input").removeAttr('disabled')
         error: ->
-          status.html("Try again")
+          form.find('.reminder').fadeIn()
+          status.html("Player not available.")
     , time*1000
+  
+    $("button.remind").click ->
+      $.ajax
+        type: "POST"
+        url: "/spy/remind.json"
+        data: {player_id: player_id}
+        success: (data) ->
+          status.html('You will be reminded.')
+          form.parents('li').fadeOut(3000, -> @.remove())
     
   $(".create button").click ->
     form = $(@).parents('div.form')
@@ -104,9 +117,7 @@ $ ->
     
     status.html('Gathering data, it can take about 10 minutes...')
     $(@).attr('disabled', 'disabled')
-    
-    
-    
+
     $.ajax
       type: "POST"
       url: "/spy.json"

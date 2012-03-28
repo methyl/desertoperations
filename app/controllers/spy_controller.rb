@@ -36,4 +36,8 @@ class SpyController < ApplicationController
     end
   end
   
+  def remind
+    render :json => nil if current_user.reminds.create(:player => Player.find(params[:player_id]))
+  end
+  
 end

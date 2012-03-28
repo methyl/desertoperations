@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120319150515) do
+ActiveRecord::Schema.define(:version => 20120327145650) do
 
   create_table "conditions", :force => true do |t|
     t.integer  "level"
@@ -36,11 +36,18 @@ ActiveRecord::Schema.define(:version => 20120319150515) do
     t.string   "player_name"
     t.integer  "game_player_id"
     t.integer  "world_id"
-    t.datetime "created_at",                  :null => false
-    t.datetime "updated_at",                  :null => false
-    t.integer  "last_score",     :limit => 8
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.integer  "last_score"
     t.integer  "bank_level"
-    t.integer  "score",          :limit => 8
+    t.integer  "score"
+  end
+
+  create_table "reminds", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "player_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "scores", :force => true do |t|
@@ -50,9 +57,6 @@ ActiveRecord::Schema.define(:version => 20120319150515) do
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
-
-  add_index "scores", ["player_id", "created_at"], :name => "player_id_created_at"
-  add_index "scores", ["player_id"], :name => "p_id"
 
   create_table "spies", :force => true do |t|
     t.integer  "player_id"

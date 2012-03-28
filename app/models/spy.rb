@@ -11,6 +11,11 @@ class Spy < ActiveRecord::Base
   end
 
   def completed?
-    bank_level
+    !bank_level.nil?
   end
+  
+  def toggle_remind
+    update_attribute :remind, !remind
+  end
+  
 end
