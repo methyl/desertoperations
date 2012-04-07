@@ -7,9 +7,19 @@
     = csrf_meta_tag
 
   %body
+
+    .top
+      = link_to "Home", root_path
+      = link_to "Spy players", spy_path
+      = link_to "Account settings", account_settings_path
+      - if current_user
+        .user-panel
+          Balance:
+          %span.balance= current_user.balance
     .alert
       = alert
     .notice
       = notice
+      
     = yield
 

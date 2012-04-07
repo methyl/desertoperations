@@ -13,6 +13,18 @@ class UsersController < ApplicationController
       render :new
     end
   end
+  
+  def settings
+    
+  end
 
-
+  def update
+    @user = current_user
+    if @user.update_attributes params[:user]
+      redirect_to account_settings_path, :notice => "Account updated successfuly."
+    else
+      flash.now.alert = "Something went wrong"
+      render :settings
+    end
+  end
 end

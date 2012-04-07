@@ -8,7 +8,8 @@ class SpyController < ApplicationController
   end
   
   def find
-    @player = Player.select("id, player_name").find_by_player_name(params[:player_name])
+    @world = World.find(params[:world_id])
+    @player = @world.players.select("id, player_name").find_by_player_name(params[:player_name])
     respond_with(@player)
   end
   
@@ -20,7 +21,11 @@ class SpyController < ApplicationController
   
   def create
     @spy = current_user.spies.create(:player => Player.find(params[:player_id]))
-    respond_with @spy
+    if @spy.valid?
+      respond_with @spy
+    else
+      raise "not enough balance"
+    end
   end
   
   def validate

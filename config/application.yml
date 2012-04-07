@@ -1,0 +1,11 @@
+defaults: &defaults
+  spy_cost: 1
+  
+development:
+  <<: *defaults
+  
+test:
+  <<: *defaults
+  
+production:
+  <<: *defaults

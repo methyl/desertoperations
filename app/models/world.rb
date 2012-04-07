@@ -3,6 +3,7 @@ class World < ActiveRecord::Base
   has_many :scores
   has_many :world_stats
   belongs_to :language
+  has_and_belongs_to_many :users
   
   def level_factor
     (level_summary.to_f / bank_count.to_f).round(2) unless bank_count == 0

@@ -53,6 +53,7 @@ $ ->
     form = $(@).parents('div.form')
     status = form.find('.status')
     player_name = form.find(".find input[type=text]").val()
+    world_id = $("select.world_id").val()
     time = 1
     
     progressbar_init(time, form)
@@ -62,7 +63,7 @@ $ ->
       $.ajax
         type: "POST"
         url: "/spy/find.json"
-        data: {player_name: player_name}
+        data: {player_name: player_name, world_id: world_id}
         success: (data) -> 
           status.html("Player "+data.player_name+" found!")
           form.find(".check input").removeAttr('disabled')
@@ -118,27 +119,30 @@ $ ->
     spy_id = 0
     time = 15
     
-    progressbar_init(time, form)
-    
-    status.html('Gathering data, it can take about 10 minutes...')
-    $(@).attr('disabled', 'disabled')
-
     $.ajax
       type: "POST"
       url: "/spy.json"
       data: {player_id: player_id}
       success: (data) ->
         spy_id = data.id
+        progressbar_init(time, form)
+        $('.balance').html($('.balance').html()-1)
+        status.html('Gathering data, it can take about 10 minutes...')
+        $(@).attr('disabled', 'disabled')
+
+
     
-    setTimeout ->
-      $.ajax
-        type: "POST"
-        url: "/spy/validate.json"
-        data: {spy_id: spy_id}
-        success: (data) ->
-          form.parents('li').fadeOut(3000, -> $(@).remove())
-          create_spy(data)
-    , time*1000
+        setTimeout ->
+          $.ajax
+            type: "POST"
+            url: "/spy/validate.json"
+            data: {spy_id: spy_id}
+            success: (data) ->
+              form.parents('li').fadeOut(3000, -> $(@).remove())
+              create_spy(data)
+        , time*1000
+      error: ->
+        status.html("Your account balance is not enough.")
     
   $('ul.spies li .refresh').click ->
     spy_id = $(@).parents('li').find('input[name=spy_id]').val()
@@ -149,6 +153,6 @@ $ ->
       data: {spy_id: spy_id}
       success: (data) ->
         li.remove()
-        create_spy(data).remove()
+        create_spy(data)
       error: ->
         li.find(".status").html("Isn't ready yet, please wait.")

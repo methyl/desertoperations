@@ -148,6 +148,7 @@ GEM
       ffi (~> 1.0.9)
       json_pure
       rubyzip
+    settingslogic (2.0.8)
     sorcery (0.7.6)
       bcrypt-ruby (~> 3.0.0)
       oauth (~> 0.4.4)
@@ -189,6 +190,7 @@ DEPENDENCIES
   pg
   rails (= 3.2.1)
   sass-rails (~> 3.2.3)
+  settingslogic
   sorcery
   sqlite3
   steak

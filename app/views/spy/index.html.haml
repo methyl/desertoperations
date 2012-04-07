@@ -1,9 +1,13 @@
 %h2 Sprawdź gracza
 
-= button_tag "Więcej", :class => "add-form"
+
 
 %ul.forms
+  - worlds = Hash[World.all.map{|w| ["#{w.language_id} - #{w.front}", w.id]}]
 
+  = select_tag(:world_id, options_for_select(worlds, current_user.default_front_id), :class=>"world_id")
+
+= button_tag "Więcej", :class => "add-form"
 
 %ul.spies
   - @spies.each do |spy|

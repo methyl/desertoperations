@@ -1,0 +1,8 @@
+%h2 Account settings
+
+= semantic_form_for current_user do |f|
+  = f.inputs "Settings" do
+    = f.input :default_language, :as => :select, :collection => Language.all, :include_blank => false
+    = f.input :default_front, :as => :select, :collection => Hash[World.all.map{|w| ["#{w.language_id} - #{w.front}", w.id]}]
+    
+  = f.buttons

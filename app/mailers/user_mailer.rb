@@ -16,4 +16,9 @@ class UserMailer < ActionMailer::Base
     @remind = remind
     mail to: remind.user.email, from: "dupa"
   end
+  
+  def notify_email(user)
+    mail to: user.email
+  end
+  
 end

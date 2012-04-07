@@ -4,7 +4,12 @@ DesertOperations::Application.routes.draw do
   get "/logout" => "sessions#destroy", :as => "logout"
   post "/login" => "sessions#create"
 
-  resources :users
+  resources :users do
+
+  end
+  
+  get '/account/settings' => "users#settings"
+   
   resources :invitations, :only => :create
   resources :worlds, :only => :index
   resources :players
