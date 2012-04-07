@@ -2,7 +2,8 @@
 
 = semantic_form_for current_user do |f|
   = f.inputs "Settings" do
-    = f.input :default_language, :as => :select, :collection => Language.all, :include_blank => false
-    = f.input :default_front, :as => :select, :collection => Hash[World.all.map{|w| ["#{w.language_id} - #{w.front}", w.id]}]
-    
+    = f.input :default_language, :as => :select, :collection => Language.all, :include_blank => false, :input_html => {:class => :language}
+    = f.input :default_front, :as => :select, :collection => World.all.map{|w| [w.front, w.id, {:class => w.language_id}]}, :include_blank => false, :input_html => {:class => :front}
+ 
+   
   = f.buttons

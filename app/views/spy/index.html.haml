@@ -3,9 +3,10 @@
 
 
 %ul.forms
-  - worlds = Hash[World.all.map{|w| ["#{w.language_id} - #{w.front}", w.id]}]
-
-  = select_tag(:world_id, options_for_select(worlds, current_user.default_front_id), :class=>"world_id")
+  = label_tag(:language, "Language")
+  = select_tag(:language, options_from_collection_for_select(Language.all, :name, :name, current_user.default_language_id), :class => "language")
+  = label_tag(:world_id, "Front")
+  = select_tag(:world_id, options_for_select(World.all.map{|w| [w.front, w.id, {:class => w.language_id}]}, current_user.default_front_id), :class=>["world_id", "front"])
 
 = button_tag "Więcej", :class => "add-form"
 
