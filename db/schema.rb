@@ -41,11 +41,11 @@ ActiveRecord::Schema.define(:version => 20120406144340) do
     t.string   "player_name"
     t.integer  "game_player_id"
     t.integer  "world_id"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-    t.integer  "last_score"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+    t.integer  "last_score",     :limit => 8
     t.integer  "bank_level"
-    t.integer  "score"
+    t.integer  "score",          :limit => 8
   end
 
   create_table "reminds", :force => true do |t|
@@ -62,6 +62,9 @@ ActiveRecord::Schema.define(:version => 20120406144340) do
     t.datetime "created_at",              :null => false
     t.datetime "updated_at",              :null => false
   end
+
+  add_index "scores", ["player_id", "created_at"], :name => "player_id_created_at"
+  add_index "scores", ["player_id"], :name => "p_id"
 
   create_table "spies", :force => true do |t|
     t.integer  "player_id"
